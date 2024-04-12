@@ -1,5 +1,9 @@
 #!/usr/bin/python3
-""" Script that lists all states from the database hbtn_0e_0_usa """
+"""
+Script that takes in an argument and displays all values
+in the states table of hbtn_0e_0_usa where name matches the argument
+but safe from MySQL injections!
+"""
 import MySQLdb
 from sys import argv
 
@@ -13,7 +17,7 @@ if __name__ == '__main__':
     # It gives us the ability to have multiple seperate working environments
     # through the same connection to the database.
     cur = db.cursor()
-    cur.execute("SELECT * FROM states")
+    cur.execute("SELECT * FROM states WHERE BINARY name = %s", [argv[4]])
 
     rows = cur.fetchall()
     for i in rows:
